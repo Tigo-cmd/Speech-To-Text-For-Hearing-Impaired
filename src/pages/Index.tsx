@@ -306,7 +306,7 @@ const Index = () => {
         {/* Transcription Results */}
         <Card className="backdrop-blur-sm bg-white/80 shadow-xl">
           <CardHeader>
-            <CardTitle>Transcription</CardTitle>
+            <CardTitle>Transcription Results</CardTitle>
           </CardHeader>
           <CardContent>
             <Textarea
