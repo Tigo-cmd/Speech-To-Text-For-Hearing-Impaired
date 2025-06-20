@@ -15,7 +15,7 @@ const Index = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
   const [transcription, setTranscription] = useState('');
-  const [apiEndpoint, setApiEndpoint] = useState('');
+ //const [apiEndpoint, setApiEndpoint] = useState('');
   const [isTranscribing, setIsTranscribing] = useState(false);
   
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -24,6 +24,7 @@ const Index = () => {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   
   const { toast } = useToast();
+  const apiEndpoint = "http://127.0.0.1:5000/transcribe"
 
   useEffect(() => {
     return () => {
@@ -129,7 +130,7 @@ const Index = () => {
     
     try {
       const formData = new FormData();
-      formData.append('audio', audioBlob, 'recording.wav');
+      formData.append('file', audioBlob, 'recording.wav');
       
       const response = await fetch(apiEndpoint, {
         method: 'POST',
@@ -140,13 +141,14 @@ const Index = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
-      const result = await response.text();
-      setTranscription(result);
-      
-      toast({
-        title: "Transcription complete",
-        description: "Your audio has been successfully transcribed",
-      });
+      const result = await response.json();
+      if (result.transcription) {
+        setTranscription(result.transcription);     
+        toast({
+          title: "Transcription complete",
+          description: "Your audio has been successfully transcribed",
+        });
+      }
       
     } catch (error) {
       console.error('Transcription error:', error);
@@ -184,8 +186,8 @@ const Index = () => {
       <div className="max-w-2xl mx-auto space-y-6">
         {/* Header */}
         <div className="text-center py-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">Voice Transcriber</h1>
-          <p className="text-gray-600">Record audio and transcribe it to text using AI</p>
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">Voice To Text For The Hearing Impaired</h1>
+          <p className="text-gray-600">Record audio and Transcribe to Text</p>
         </div>
 
         {/* Recording Section */}
@@ -193,7 +195,7 @@ const Index = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Volume2 className="w-5 h-5" />
-              Audio Recording
+              Record Clear Audio
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -261,28 +263,7 @@ const Index = () => {
 
         {/* API Configuration */}
         <Card className="backdrop-blur-sm bg-white/80 shadow-xl">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Upload className="w-5 h-5" />
-              Transcription API
-            </CardTitle>
-          </CardHeader>
           <CardContent className="space-y-4">
-            <div>
-              <Label htmlFor="api-endpoint">API Endpoint URL</Label>
-              <Input
-                id="api-endpoint"
-                type="url"
-                placeholder="https://api.example.com/transcribe"
-                value={apiEndpoint}
-                onChange={(e) => setApiEndpoint(e.target.value)}
-                className="mt-2"
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                Enter the URL of your transcription API endpoint
-              </p>
-            </div>
-            
             <Button
               onClick={transcribeAudio}
               disabled={!audioBlob || !apiEndpoint || isTranscribing}
@@ -306,7 +287,7 @@ const Index = () => {
         {/* Transcription Results */}
         <Card className="backdrop-blur-sm bg-white/80 shadow-xl">
           <CardHeader>
-            <CardTitle>Transcription Results</CardTitle>
+            <CardTitle>Transcription Results: Check the LCD</CardTitle>
           </CardHeader>
           <CardContent>
             <Textarea
