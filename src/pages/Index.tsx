@@ -24,7 +24,7 @@ const Index = () => {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   
   const { toast } = useToast();
-  const apiEndpoint = "http://192.168.214.48:5000/transcribe"
+  const apiEndpoint = "https://b78a-197-211-58-13.ngrok-free.app/transcribe"
 
   useEffect(() => {
     return () => {
