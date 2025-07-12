@@ -287,7 +287,7 @@ const Index = () => {
         {/* Transcription Results */}
         <Card className="backdrop-blur-sm bg-white/80 shadow-xl">
           <CardHeader>
-            <CardTitle>Transcription Results: Check the LCD</CardTitle>
+            <CardTitle>Transcription Results</CardTitle>
           </CardHeader>
           <CardContent>
             <Textarea
