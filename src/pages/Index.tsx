@@ -186,7 +186,7 @@ const Index = () => {
       <div className="max-w-2xl mx-auto space-y-6">
         {/* Header */}
         <div className="text-center py-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">Nisha RealTime Audio Transcription</h1>
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">Speech To Text For The Hearing Impaired</h1>
           <p className="text-gray-600">Record audio and Transcribe to Text</p>
         </div>
 
@@ -287,7 +287,7 @@ const Index = () => {
         {/* Transcription Results */}
         <Card className="backdrop-blur-sm bg-white/80 shadow-xl">
           <CardHeader>
-            <CardTitle>Transcription Results</CardTitle>
+            <CardTitle>Transcription Results Check LCD 🖥️</CardTitle>
           </CardHeader>
           <CardContent>
             <Textarea
